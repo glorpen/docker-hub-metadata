@@ -71,3 +71,8 @@ Env vars correspond to app commandline arguments:
 - PASSWORD
 - DESCRIPTION
 - LONG_DESCRIPTION_FILE
+
+Examples
+========
+
+This repo - see ``.travis.yml``.
