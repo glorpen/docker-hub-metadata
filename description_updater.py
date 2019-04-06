@@ -11,8 +11,6 @@ import argparse
 import requests
 import subprocess
 
-__version__ = "1.0.0"
-
 class Updater(object):
     
     _headers = {
