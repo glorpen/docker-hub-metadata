@@ -28,7 +28,7 @@ Usage
 
 ``docker run --rm glorpen/hub-metadata --help``:
 
-.. sourcecode:: plain
+.. code::
 
    usage: docker-hub-metadata [-h] [--repository NAME] [--username USER]
                               [--password PASS] [--description DESC]
