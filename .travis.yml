@@ -1,0 +1,29 @@
+services:
+  - docker
+
+install: []
+
+script:
+  - docker build -t ${DOCKER_BUILD} ./
+  - docker run --rm -v ${TRAVIS_BUILD_DIR}:/srv ${DOCKER_BUILD} --print-only -l /srv/README.rst > /dev/null
+
+env:
+  global:
+    - DOCKER_REPOSITORY: glorpen/hub-metadata
+    - DOCKER_USERNAME: glorpen
+    - secure: "RfTn0Dq/GDghS/muetVYZJQeoO1UpBjhve84jYtK+UulpcN7BUyuI82Ps/KJVnoqB1YqS1waT68/UtexS2Dep2HlB7hGgSg6+yU+307gOFq3bzcG4+rmQRfXI1X46Qff+SlvtgVeB2JxCvnkaANzwiwMdvyFWF180nGdJc0pIDCJy8wUJNfTyTv916uaEjNRgI6Ol68ZLiLh+2QsP948iBQoTttNiR64Tgy/RXtoPGWD/+tjG3pUnYUYY20JERPkxl34/R3IQyxjVwA2zoFjJ2Qipz/sJzJXups0HxhLnU8DTd6cuuPAgBzguIfQf6Z1x2OHwDzGq7ifm6c2i6dJpLvEmHvxHDEhZQCYJK/JoQueVHqTb4Xa02JCz8d75uIYy5yX9fufEqlajHlQ+uo+czzl/1DhcNe0md7fvVnQjtTFfQA6BO6+42/tsSbcheeQ37oIYYCJ3IVH39g8W7aeCWyImWSDvUE8dOGl4i33F+rnef3M6l0vrrnRlAGKoXdQD0hey/P6qfS6Y1zxk0s50ImoutKdiPpL538zqv3LqiZ9GYXBIijZouuUIwA9Fkgl162LLnEcs443q1vs6GIbF5BTuL/ShWcVTCK0trc3Wmp/bZWOffSiBovPaE0ISgvfkee6k9QojMDEEonNAfhpgyr0syec+E10Cfetyn1HIPM="
+    - DOCKER_BUILD: ${DOCKER_REPOSITORY}:b${TRAVIS_BUILD_NUMBER}
+
+deploy:
+  - provider: script
+    on:
+      tags: true
+      branch: master
+      condition: "$TRAVIS_TAG =~ ^v[0-9.]+$"
+    script: 'set -e;
+             docker run --rm -v ${TRAVIS_BUILD_DIR}:/srv -e "PASSWORD=$DOCKER_PASSWORD" ${DOCKER_BUILD} -l /srv/README.rst -u "${DOCKER_USERNAME}" -r "${DOCKER_REPOSITORY}";
+             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin;
+             set -x;
+             docker tag "${DOCKER_BUILD}" ${DOCKER_REPOSITORY}:latest;
+             docker tag "${DOCKER_BUILD}" "${DOCKER_REPOSITORY}:${TRAVIS_TAG/v/}";
+             docker push ${DOCKER_REPOSITORY}:latest; docker push "${DOCKER_REPOSITORY}:${TRAVIS_TAG/v/}";'
