@@ -10,6 +10,6 @@ RUN apk update \
   && apk add py3-requests pandoc \
   && rm /var/cache/apk/*
 
-ADD description_updater.py /usr/local/bin/docker-description-updater
+ADD description_updater.py /usr/local/bin/docker-hub-metadata
 
-ENTRYPOINT ["/usr/local/bin/docker-description-updater"]
+ENTRYPOINT ["/usr/local/bin/docker-hub-metadata"]

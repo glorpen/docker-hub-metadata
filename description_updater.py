@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 
-import requests
-import json
-import argparse
+"""
+@author: Arkadiusz Dzięgiel <arkadiusz.dziegiel@glorpen.pl>
+"""
+
 import os
 import sys
+import json
+import argparse
+import requests
 import subprocess
 
 __version__ = "1.0.0"
@@ -62,10 +66,10 @@ if __name__ == "__main__":
             Use "--" to add arguments to pandoc process, eg. changing output to 10 columns wide: %(prog)s -l README.rst -- --columns 10
         """,
         description="""
-            Converts and uploads description to repository on Docker Hub.
+            Converts and sets repository description on Docker Hub.
         """
     )
-    p.add_argument('--repository', '-r', default=os.environ.get("REPOSITORY"), help="repository name, eg. glorpen/hub-description-updater", metavar="NAME")
+    p.add_argument('--repository', '-r', default=os.environ.get("REPOSITORY"), help="repository name, eg. glorpen/hub-metadata", metavar="NAME")
     p.add_argument('--username', '-u', default=os.environ.get("USERNAME"), metavar="USER")
     p.add_argument('--password', '-p', default=os.environ.get("PASSWORD"), metavar="PASS")
     p.add_argument('--description', '-d', default=os.environ.get("DESCRIPTION"), metavar="DESC")
