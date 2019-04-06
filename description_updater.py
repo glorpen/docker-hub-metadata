@@ -21,7 +21,7 @@ class Updater(object):
     _host = "https://cloud.docker.com"
     
     def _req(self, method, url, data):
-        response = getattr(requests, method)("%s/%s" % (_host, url), json.dumps(data), headers=self._headers)
+        response = getattr(requests, method)("%s/%s" % (self._host, url), json.dumps(data), headers=self._headers)
         response.raise_for_status()
         return response.json()
     
