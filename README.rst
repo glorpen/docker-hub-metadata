@@ -4,6 +4,16 @@ Docker Hub Metadata
 
 Updates repository description on Docker Hub / Docker Cloud.
 
+---------------------
+Official repositories
+---------------------
+
+GitHub: https://github.com/glorpen/docker-hub-metadata
+
+BitBucket: https://bitbucket.org/glorpen/docker-hub-metadata
+
+Docker Hub: https://hub.docker.com/r/glorpen/hub-metadata
+
 ----
 Why?
 ----
